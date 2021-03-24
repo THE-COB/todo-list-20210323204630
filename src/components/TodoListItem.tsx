@@ -19,12 +19,13 @@ interface TodoListItemProps {
   todoItem: TodoItem;
   deleteMethod: (item: TodoItem) => void;
   editMethod: (item: TodoItem, newText: string) => void;
+  checkMethod: (item: TodoItem) => void;
 }
 
 const handleDelete = (item: TodoItem) => {
   TodoItem.ALL_ITEMS.delete(item);
 }
-const TodoListItem: React.FC<TodoListItemProps> = ({todoItem, deleteMethod, editMethod}) => {
+const TodoListItem: React.FC<TodoListItemProps> = ({todoItem, deleteMethod, editMethod, checkMethod}) => {
 
   const [showModal, setShowModal] = useState(false);
   const [text, setText] = useState<string>("");
@@ -36,7 +37,7 @@ const TodoListItem: React.FC<TodoListItemProps> = ({todoItem, deleteMethod, edit
         <IonButton onClick={() => editMethod(todoItem, text)}>Update</IonButton>
         <IonButton onClick={() => setShowModal(false)}>Close</IonButton>
       </IonModal>
-      <IonCheckbox style={{margin: "1em"}} checked={todoItem.isComplete()} onIonChange={e => todoItem.changeCompletion()} />
+      <IonCheckbox style={{margin: "1em"}} checked={todoItem.isComplete()} onIonChange={e => checkMethod(todoItem)} />
       <IonLabel style={{margin: "1em"}}>
       <h2 style={{marginTop: "2em"}}>
         {todoItem.getText()}

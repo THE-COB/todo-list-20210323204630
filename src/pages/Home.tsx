@@ -19,6 +19,7 @@ import {
 import { Plugins } from "@capacitor/core";
 import './Home.css';
 import { checkmark } from 'ionicons/icons';
+import { updateTypePredicateNodeWithModifier } from 'typescript';
 
 const { Storage } = Plugins;
 const Home: React.FC = () => {
@@ -38,6 +39,17 @@ const Home: React.FC = () => {
     }
     let itemsList = Array.from(TodoItem.ALL_ITEMS).sort((a,b) => b.getTimestamp()-a.getTimestamp());
     setItems(itemsList);
+  }
+
+  const checkUncheck = async (item: TodoItem) => {
+    item.changeCompletion();
+    await Storage.set({
+      key: ""+item.getTimestamp(),
+      value: JSON.stringify({
+        text: item.getText(),
+        isComplete: item.isComplete()
+      })
+    })
   }
 
   const handleAdd = async () => {
@@ -82,7 +94,9 @@ const Home: React.FC = () => {
       let val = JSON.parse(strVal.value || "{}");
       new TodoItem(val.text, Number(k), val.isComplete);
     });
-    rewriteList();
+    setTimeout(() => {
+      rewriteList();
+    }, 1000);
   });
 
   const refresh = (e: CustomEvent) => {
@@ -118,7 +132,7 @@ const Home: React.FC = () => {
         </IonItem>
         <IonList>
           {/* {messages.map(m => <MessageListItem key={m.id} message={m} />)} */}
-          {items.map(m => <TodoListItem editMethod={editItem} deleteMethod={deleteItem} key={m.getTimestamp()} todoItem={m} />)}
+          {items.map(m => <TodoListItem checkMethod={checkUncheck} editMethod={editItem} deleteMethod={deleteItem} key={m.getTimestamp()} todoItem={m} />)}
         </IonList>
       </IonContent>
     </IonPage>
