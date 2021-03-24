@@ -1,16 +1,15 @@
-ion-item {
+/* ion-item {
   --padding-start: 0;
   --inner-padding-end: 0;
-}
+} */
 
-ion-label {
+/* ion-label {
   margin-top: 12px;
   margin-bottom: 12px;
-}
+} */
 
 ion-item h2 {
-  font-weight: 600;
-  margin: 0;
+  margin: 3em;
 }
 
 ion-item p {
@@ -21,6 +20,7 @@ ion-item p {
 }
 
 ion-item .date {
+  margin: 1em;
   float: right;
   align-items: center;
   display: flex;
@@ -32,12 +32,7 @@ ion-item ion-icon {
 
 ion-item ion-note {
   font-size: 15px;
-  margin-right: 8px;
   font-weight: normal;
-}
-
-ion-item ion-note.md {
-  margin-right: 14px;
 }
 
 .dot {
